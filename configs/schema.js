@@ -1,5 +1,5 @@
 import { boolean } from "drizzle-orm/gel-core";
-
+import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 export const Users=pgTable("users",{
     id:serial("id").primaryKey(),
     name:text("name").notNull(),
