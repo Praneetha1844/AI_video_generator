@@ -9,17 +9,21 @@ export async function saveUser(user) {
     const existing = await db
       .select()
       .from(users)
-      .where(eq(users.email, user.primaryEmailAddress?.emailAddress));
+      .where(eq(users.clerkId, user.id));
 
     if (!existing[0]) {
       await db.insert(users).values({
+        clerkId: user.id,
         email: user.primaryEmailAddress?.emailAddress,
         name: user.fullName,
-        clerkId: user.id,
-        profileImageUrl: user.profileImageUrl,
+        imageUrl: user.profileImageUrl,
       });
+      console.log("User saved to database successfully");
+    } else {
+      console.log("User already exists in database");
     }
   } catch (error) {
     console.error("Error saving user:", error);
+    throw error;
   }
 }
